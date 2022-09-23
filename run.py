@@ -18,6 +18,7 @@ def draw():
         else:
             board += f"{v} "
     print(board)
+    handle_round()
 
 def handle_round():
     handle_user_round()
@@ -31,11 +32,14 @@ def handle_round():
 def handle_user_round():
     try:
         user_input = input("Select placement: ")
-        if "X" or "O" in board_state[user_input]:
-            handle_user_round_retry(user_input)
-
+        if "X" in board_state[user_input] or "O" in board_state[user_input]:
+            raise ValueError()
+            
         board_state.update({user_input: board_state[user_input].replace("-", "X")})
 
+    except (KeyError, ValueError):
+        print(f"Please select a valid placement. {user_input} is not valid")
+        handle_user_round()
 def init_game():
     print("Welcome to tic tac toe!")
 
