@@ -93,7 +93,7 @@ def handle_computer_round():
     """
     while True:
         temp_computer_key = random.choice(list(board_state.keys()))
-        if "X" or "O" not in board_state[temp_computer_key]:
+        if "X" not in board_state[temp_computer_key] and "O" not in board_state[temp_computer_key]:
             board_state.update({temp_computer_key: board_state[temp_computer_key].replace("-", "O")})
             break
 
