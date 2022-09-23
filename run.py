@@ -30,8 +30,6 @@ def init_game():
     handle_round()
 
 
-
-
 def draw():
     """
     Draws the game board
