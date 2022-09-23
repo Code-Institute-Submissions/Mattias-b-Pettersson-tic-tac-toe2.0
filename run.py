@@ -1,12 +1,20 @@
 import random
 
+
+class Player:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def print_score(self):
+        print(f"{self.name.capitalize()} score is {self.score}\n")
+
+
 def init_game():
     """
     Initializes the game.
     """
-    print("Welcome to tic tac toe!")
-    print("You are X on the board.")
-
+    print("\n You are X on the board.")
     global board_state
     board_state = {
         "A1": "| -",
@@ -19,8 +27,9 @@ def init_game():
         "B3": "| - |",
         "C3": "- |"}
     draw()
-  
     handle_round()
+
+
 
 
 def draw():
@@ -91,7 +100,7 @@ def handle_computer_round():
 
 def check_if_game_is_over():
     """
-    Will check if game is over by either the board is full or the game has a winner.
+    Will check if game has a winner or if the board is full.
     """
     if check_winner():
         return check_winner()
@@ -118,6 +127,9 @@ def check_if_board_full():
 
 
 def check_winner():
+    """
+    Checks if there are any winners in the current board state
+    """
     if "X" in board_state["A1"] and "X" in board_state["A2"] and "X" in board_state["A3"]:
         return "win"
     elif "O" in board_state["A1"] and "O" in board_state["A2"] and "O" in board_state["A3"]:
@@ -150,12 +162,31 @@ def check_winner():
         return "win"
     elif "O" in board_state["C1"] and "O" in board_state["B2"] and "O" in board_state["A3"]:
         return "loss"
-    
-    
 
 
 
 def end_game(message):
-    print(f"The game ends in a {message}")
+    """
+    Handles the game ending, and adds score to the winning player,
+    or if draw, no score is added
+    """
+
+    print(f"\nThe game ends in a {message}!")
+    if message == "win":
+        user.score += 1
+    if message == "loss":
+        computer.score += 1
+
+    print(user.print_score())
+    print(computer.print_score())
+
+    play_again_input = input("If you want to go for another round, please type Y: ").upper()
+    if play_again_input == "Y":
+        init_game()
+
+print("Welcome to tic tac toe!\n")
+name_input = input("Please enter your name: ")
+user = Player(name_input, 0)
+computer = Player("Computer", 0)
 
 init_game()
