@@ -97,8 +97,8 @@ def handle_user_round():
 
     except KeyError:
         print(
-            f"Please select a valid placement.
-            {user_input} is not a valid input!")
+            "Please select a valid placement. "
+            f"{user_input} is not a valid input!")
         handle_user_round()
 
 
