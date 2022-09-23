@@ -1,4 +1,5 @@
 import random
+import os
 
 
 class Player:
@@ -10,11 +11,19 @@ class Player:
         print(f"{self.name.capitalize()} score is {self.score}\n")
 
 
+def init_session():
+    print("Welcome to tic tac toe!\n")
+    name_input = input("Please enter your name: ")
+    user = Player(name_input, 0)
+    computer = Player("Computer", 0)
+    init_game()
+
+
 def init_game():
     """
     Initializes the game.
     """
-    print("\n You are X on the board.")
+    print("\nYou are X on the board.\n")
     global board_state
     board_state = {
         "A1": "| -",
@@ -57,6 +66,9 @@ def handle_round():
     Handles each round after the player and computer selections.
     """
     handle_user_round()
+    if check_if_game_is_over():
+        end_game(check_if_game_is_over())
+        return
     handle_computer_round()
     draw()
     if check_if_game_is_over():
@@ -71,7 +83,7 @@ def handle_user_round():
     value and checks if the selection is occupied.
     """
     try:
-        user_input = input("Select placement: ").upper()
+        user_input = input("Select placement for example A1: ").upper()
         if "X" in board_state[user_input] or "O" in board_state[user_input]:
             print(f"Please select a valid placement. {user_input}"\
                 " is already occupied!")
@@ -161,8 +173,6 @@ def check_winner():
     elif "O" in board_state["C1"] and "O" in board_state["B2"] and "O" in board_state["A3"]:
         return "loss"
 
-
-
 def end_game(message):
     """
     Handles the game ending, and adds score to the winning player,
@@ -175,16 +185,16 @@ def end_game(message):
     if message == "loss":
         computer.score += 1
 
-    print(user.print_score())
-    print(computer.print_score())
+    user.print_score()
+    computer.print_score()
 
     play_again_input = input("If you want to go for another round, please type Y: ").upper()
     if play_again_input == "Y":
+        cls()
         init_game()
 
-print("Welcome to tic tac toe!\n")
-name_input = input("Please enter your name: ")
-user = Player(name_input, 0)
-computer = Player("Computer", 0)
 
-init_game()
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+init_session()
