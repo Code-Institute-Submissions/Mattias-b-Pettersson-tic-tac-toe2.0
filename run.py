@@ -19,7 +19,7 @@ def init_game():
         "B3": "| - |",
         "C3": "- |"}
     draw()
-    
+  
     handle_round()
 
 
@@ -52,21 +52,22 @@ def handle_round():
     handle_user_round()
     handle_computer_round()
     draw()
-    check_if_over = check_if_game_is_over()
-    if  check_if_over == True:
-        end_game()
+    if check_if_game_is_over():
+        end_game(check_if_game_is_over())
     else:
         handle_round()
 
 
 def handle_user_round():
     """
-    Handles the user selection and verifies that the selection has a valid value and checks if the selection is occupied.
+    Handles the user selection and verifies that the selection has a valid
+    value and checks if the selection is occupied.
     """
     try:
         user_input = input("Select placement: ").upper()
         if "X" in board_state[user_input] or "O" in board_state[user_input]:
-            print(f"Please select a valid placement. {user_input} is already occupied!")
+            print(f"Please select a valid placement. {user_input}"\
+                " is already occupied!")
             handle_user_round()
             
         board_state.update({user_input: board_state[user_input].replace("-", "X")})
@@ -78,7 +79,7 @@ def handle_user_round():
 
 def handle_computer_round():
     """
-     Handles the computer selection and checks if the selection is occupied. If it is, it will loop and select again.
+    Handles the computer selection and checks if the selection is occupied. If it is, it will loop and select a new.
     """
     while True:
         temp_computer_key = random.choice(list(board_state.keys()))
@@ -93,15 +94,16 @@ def check_if_game_is_over():
     """
     #check_winner() 
 
-    check_if_full = check_if_board_full()
-    if check_if_full == True:
-        print("game is over! Board full")
-        return True
-    
+    if check_if_board_full():
+        return "draw"
     else:
         return False
 
+
 def check_if_board_full():
+    """
+    Checks if the board is full
+    """
     board_count = 0
     result = False
     for k, v in board_state.items():
@@ -111,15 +113,14 @@ def check_if_board_full():
             board_count += 1
     if board_count == 9:
         result = True
-        print(board_count)
     return result
 
-        
 
 def check_winner():
     print("hej hej")
 
+
 def end_game(message):
-    print("hej hej")
+    print(f"The game ends in a {message}")
 
 init_game()
