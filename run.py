@@ -19,6 +19,23 @@ def draw():
             board += f"{v} "
     print(board)
 
+def handle_round():
+    handle_user_round()
+    #handle_computer_round()
+    draw()
+    # if check_if_game_is_over():
+        # end_game()
+    # else:
+        # handle_round()
+
+def handle_user_round():
+    try:
+        user_input = input("Select placement: ")
+        if "X" or "O" in board_state[user_input]:
+            handle_user_round_retry(user_input)
+
+        board_state.update({user_input: board_state[user_input].replace("-", "X")})
+
 def init_game():
     print("Welcome to tic tac toe!")
 
