@@ -88,26 +88,32 @@ def handle_user_round():
     try:
         user_input = input("Select placement for example A1: ").upper()
         if "X" in board_state[user_input] or "O" in board_state[user_input]:
-            print(f"Please select a valid placement. {user_input}"\
-                " is already occupied!")
+            print(f"Please select a valid placement. {user_input}"
+                  " is already occupied!")
             handle_user_round()
-            
-        board_state.update({user_input: board_state[user_input].replace("-", "X")})
+
+        board_state.update(
+            {user_input: board_state[user_input].replace("-", "X")})
 
     except KeyError:
-        print(f"Please select a valid placement. {user_input} is not a valid input!")
+        print(
+            f"Please select a valid placement.
+            {user_input} is not a valid input!")
         handle_user_round()
 
 
 def handle_computer_round():
     """
-    Handles the computer selection and checks if the selection is occupied. 
+    Handles the computer selection and checks if the selection is occupied.
     If it is, it will loop and select a new.
     """
     while True:
         temp_computer_key = choice(list(board_state.keys()))
-        if "X" not in board_state[temp_computer_key] and "O" not in board_state[temp_computer_key]:
-            board_state.update({temp_computer_key: board_state[temp_computer_key].replace("-", "O")})
+        if "X" not in board_state[temp_computer_key] and \
+           "O" not in board_state[temp_computer_key]:
+            board_state.update({temp_computer_key:
+                                board_state[temp_computer_key]
+                                .replace("-", "O")})
             break
 
 
@@ -143,38 +149,55 @@ def check_winner():
     """
     Checks if there are any winners in the current board state
     """
-    if "X" in board_state["A1"] and "X" in board_state["A2"] and "X" in board_state["A3"]:
+    if "X" in board_state["A1"] and \
+       "X" in board_state["A2"] and "X" in board_state["A3"]:
         return "win"
-    elif "O" in board_state["A1"] and "O" in board_state["A2"] and "O" in board_state["A3"]:
+    elif "O" in board_state["A1"] and \
+         "O" in board_state["A2"] and "O" in board_state["A3"]:
         return "loss"
-    elif "X" in board_state["B1"] and "X" in board_state["B2"] and "X" in board_state["B3"]:
+    elif "X" in board_state["B1"] and \
+         "X" in board_state["B2"] and "X" in board_state["B3"]:
         return "win"
-    elif "O" in board_state["B1"] and "O" in board_state["B2"] and "O" in board_state["B3"]:
+    elif "O" in board_state["B1"] and \
+         "O" in board_state["B2"] and "O" in board_state["B3"]:
         return "loss"
-    elif "X" in board_state["C1"] and "X" in board_state["C2"] and "X" in board_state["C3"]:
+    elif "X" in board_state["C1"] and \
+         "X" in board_state["C2"] and "X" in board_state["C3"]:
         return "win"
-    elif "O" in board_state["C1"] and "O" in board_state["C2"] and "O" in board_state["C3"]:
+    elif "O" in board_state["C1"] and \
+         "O" in board_state["C2"] and "O" in board_state["C3"]:
         return "loss"
-    elif "X" in board_state["A1"] and "X" in board_state["B1"] and "X" in board_state["C1"]:
+    elif "X" in board_state["A1"] and \
+         "X" in board_state["B1"] and "X" in board_state["C1"]:
         return "win"
-    elif "O" in board_state["A1"] and "O" in board_state["B1"] and "O" in board_state["C1"]:
+    elif "O" in board_state["A1"] and \
+         "O" in board_state["B1"] and "O" in board_state["C1"]:
         return "loss"
-    elif "X" in board_state["A2"] and "X" in board_state["B2"] and "X" in board_state["C2"]:
+    elif "X" in board_state["A2"] and \
+         "X" in board_state["B2"] and "X" in board_state["C2"]:
         return "win"
-    elif "O" in board_state["A2"] and "O" in board_state["B2"] and "O" in board_state["C2"]:
+    elif "O" in board_state["A2"] and \
+         "O" in board_state["B2"] and "O" in board_state["C2"]:
         return "loss"
-    elif "X" in board_state["A3"] and "X" in board_state["B3"] and "X" in board_state["C3"]:
+    elif "X" in board_state["A3"] and \
+         "X" in board_state["B3"] and "X" in board_state["C3"]:
         return "win"
-    elif "O" in board_state["A3"] and "O" in board_state["B3"] and "O" in board_state["C3"]:
+    elif "O" in board_state["A3"] and \
+         "O" in board_state["B3"] and "O" in board_state["C3"]:
         return "loss"
-    elif "X" in board_state["A1"] and "X" in board_state["B2"] and "X" in board_state["C3"]:
+    elif "X" in board_state["A1"] and \
+         "X" in board_state["B2"] and "X" in board_state["C3"]:
         return "win"
-    elif "O" in board_state["A1"] and "O" in board_state["B2"] and "O" in board_state["C3"]:
+    elif "O" in board_state["A1"] and \
+         "O" in board_state["B2"] and "O" in board_state["C3"]:
         return "loss"
-    elif "X" in board_state["C1"] and "X" in board_state["B2"] and "X" in board_state["A3"]:
+    elif "X" in board_state["C1"] and \
+         "X" in board_state["B2"] and "X" in board_state["A3"]:
         return "win"
-    elif "O" in board_state["C1"] and "O" in board_state["B2"] and "O" in board_state["A3"]:
+    elif "O" in board_state["C1"] and \
+         "O" in board_state["B2"] and "O" in board_state["A3"]:
         return "loss"
+
 
 def end_game(message):
     """
@@ -191,13 +214,15 @@ def end_game(message):
     user.print_score()
     computer.print_score()
 
-    play_again_input = input("If you want to go for another round, please type Y: ").upper()
+    play_again_input = input(
+        "If you want to go for another round, please type Y: ").upper()
     if play_again_input == "Y":
         cls()
         init_game()
 
 
 def cls():
-    system('cls' if name=='nt' else 'clear')
+    system('cls' if name == 'nt' else 'clear')
+
 
 init_session()
