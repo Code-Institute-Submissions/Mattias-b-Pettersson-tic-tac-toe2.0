@@ -1,5 +1,5 @@
-import random
-import os
+from random import choice
+from os import system, name
 
 
 class Player:
@@ -14,7 +14,9 @@ class Player:
 def init_session():
     print("Welcome to tic tac toe!\n")
     name_input = input("Please enter your name: ")
+    global user
     user = Player(name_input, 0)
+    global computer
     computer = Player("Computer", 0)
     init_game()
 
@@ -67,6 +69,7 @@ def handle_round():
     """
     handle_user_round()
     if check_if_game_is_over():
+        draw()
         end_game(check_if_game_is_over())
         return
     handle_computer_round()
@@ -102,7 +105,7 @@ def handle_computer_round():
     If it is, it will loop and select a new.
     """
     while True:
-        temp_computer_key = random.choice(list(board_state.keys()))
+        temp_computer_key = choice(list(board_state.keys()))
         if "X" not in board_state[temp_computer_key] and "O" not in board_state[temp_computer_key]:
             board_state.update({temp_computer_key: board_state[temp_computer_key].replace("-", "O")})
             break
@@ -195,6 +198,6 @@ def end_game(message):
 
 
 def cls():
-    os.system('cls' if os.name=='nt' else 'clear')
+    system('cls' if name=='nt' else 'clear')
 
 init_session()
