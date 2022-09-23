@@ -1,3 +1,22 @@
+import random
+
+def init_game():
+    print("Welcome to tic tac toe!")
+
+    global board_state
+    board_state = {
+        "A1": "| -",
+        "B1": "| - |",
+        "C1": "- |",
+        "A2": "| -",
+        "B2": "| - |",
+        "C2": "- |",
+        "A3": "| -",
+        "B3": "| - |",
+        "C3": "- |"}
+    draw()
+
+
 def draw():
     """
     Draws the game board
@@ -20,14 +39,15 @@ def draw():
     print(board)
     handle_round()
 
+
 def handle_round():
     handle_user_round()
     handle_computer_round()
     draw()
-    # if check_if_game_is_over():
-        # end_game()
-    # else:
-        # handle_round()
+    if check_if_game_is_over():
+        end_game()
+    else:
+        handle_round()
 
 
 def handle_user_round():
@@ -51,20 +71,15 @@ def handle_computer_round():
             break
 
 
-def init_game():
-    print("Welcome to tic tac toe!")
+def check_if_game_is_over():
+    #check_winner()
+    #check_if_board_full()
+    return False
 
-    global board_state
-    board_state = {
-        "A1": "| -",
-        "B1": "| - |",
-        "C1": "- |",
-        "A2": "| -",
-        "B2": "| - |",
-        "C2": "- |",
-        "A3": "| -",
-        "B3": "| - |",
-        "C3": "- |"}
-    draw()
+def check_winner():
+
+
+def end_game(message):
+    print("hej hej")
 
 init_game()
