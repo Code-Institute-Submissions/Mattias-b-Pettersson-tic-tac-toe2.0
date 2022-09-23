@@ -22,12 +22,13 @@ def draw():
 
 def handle_round():
     handle_user_round()
-    #handle_computer_round()
+    handle_computer_round()
     draw()
     # if check_if_game_is_over():
         # end_game()
     # else:
         # handle_round()
+
 
 def handle_user_round():
     try:
@@ -40,6 +41,16 @@ def handle_user_round():
     except (KeyError, ValueError):
         print(f"Please select a valid placement. {user_input} is not valid")
         handle_user_round()
+
+
+def handle_computer_round():
+    while True:
+        temp_computer_key = random.choice(list(board_state.keys()))
+        if "X" or "O" not in board_state[temp_computer_key]:
+            board_state.update({temp_computer_key: board_state[temp_computer_key].replace("-", "O")})
+            break
+
+
 def init_game():
     print("Welcome to tic tac toe!")
 
