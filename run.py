@@ -222,6 +222,10 @@ def end_game(message):
 
 
 def cls():
+    """
+    When calling this function it clears the terminal.
+    It also checks if the terminal is based on Windows or another OS.
+    """
     system('cls' if name == 'nt' else 'clear')
 
 
