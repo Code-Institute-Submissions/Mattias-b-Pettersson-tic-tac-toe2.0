@@ -13,6 +13,10 @@ class Player:
         self.score = score
 
     def print_score(self):
+        """
+        prints the score to the terminal.
+        <name> score is <score>
+        """
         print(f"{self.name.capitalize()} score is {self.score}\n")
 
 
