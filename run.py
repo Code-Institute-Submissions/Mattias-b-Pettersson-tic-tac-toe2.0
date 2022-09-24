@@ -1,38 +1,20 @@
 from random import choice
-from os import system, name
+from os import system, name as os_name
 
 
-class Board:
+class Session:
     """
-    class initialises the players (user and computer).
-    Also has the print_score function that prints the score.
+    a class repressenting a session of tic tac toe
     """
+    def __init__(self, player_name):
+        self.user = Player(player_name)
+        self.computer = Player("computer")
+        self.board_state = {}
+        self.init_board()
 
-
-
-    def __init__(self, user_name, user_score, computer_name, computer_score):
-        global empty_board
-        
-
-        self.user_name = user_name
-        self.user_score = user_score
-        self.computer_name = computer_name
-        self.computer_score = computer_score
-
-
-    def print_score(self, player):
+    def init_board(self):
         """
-        prints the score to the terminal.
-        <name> score is <score>
-        """
-        if player == "user":
-            print(f"{self.user_name.capitalize()} score is {self.user_score}\n")
-        elif player == "computer":
-            print(f"{self.computer_name.capitalize()} score is {self.computer_score}\n")
-
-    def reset_board(self):
-        """
-        resets the playboard to empty state
+        reset playboard
         """
         empty_board = {
                         "A1": "| -",
@@ -47,6 +29,22 @@ class Board:
         self.board_state = empty_board
 
 
+class Player:
+    """
+    a class representing the player
+    """
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+
+    def print_score(self):
+        """
+        prints the score to the terminal.
+        <name> score is <score>
+        """
+        print(self.name.capitalize() +
+              f" score is {self.score}\n")
+
 
 def init_session():
     """
@@ -59,8 +57,8 @@ def init_session():
     while name_input == "":
         print("\nEmpty name input is not accepted!")
         name_input = input("Please enter your name: ")
-    global board
-    board = Board(name_input, 0, "computer", 0)
+    global session
+    session = Session(name_input)
     init_game()
 
 
@@ -69,7 +67,6 @@ def init_game():
     Initializes new game.
     """
     print("\nYou are X on the board.\n")
-    board.reset_board()
     draw()
     handle_round()
 
@@ -79,7 +76,7 @@ def draw():
     Draws the game board
     """
     temp_board_string = ""
-    for k, v in board.board_state.items():
+    for k, v in session.board_state.items():
 
         if k == "A1":
             print("    A   B   C")
@@ -122,12 +119,13 @@ def handle_user_round():
     """
     try:
         user_input = input("Select placement for example A1: ").upper()
-        if "X" in board.board_state[user_input] or "O" in board.board_state[user_input]:
+        if "X" in session.board_state[user_input] or \
+           "O" in session.board_state[user_input]:
             print(f"Please select a valid placement. {user_input}"
                   " is already occupied!")
             handle_user_round()
-        board.board_state.update(
-            {user_input: board.board_state[user_input].replace("-", "X")})
+        session.board_state.update(
+            {user_input: session.board_state[user_input].replace("-", "X")})
 
     except KeyError:
         if user_input == "":
@@ -145,12 +143,12 @@ def handle_computer_round():
     If it is, it will loop and select a new.
     """
     while True:
-        temp_computer_key = choice(list(board.board_state.keys()))
-        if "X" not in board.board_state[temp_computer_key] and \
-           "O" not in board.board_state[temp_computer_key]:
-            board.board_state.update({temp_computer_key:
-                                      board.board_state[temp_computer_key]
-                                      .replace("-", "O")})
+        temp_computer_key = choice(list(session.board_state.keys()))
+        if "X" not in session.board_state[temp_computer_key] and \
+           "O" not in session.board_state[temp_computer_key]:
+            session.board_state.update({temp_computer_key:
+                                       session.board_state[temp_computer_key]
+                                       .replace("-", "O")})
             break
 
 
@@ -172,7 +170,7 @@ def check_if_board_full():
     """
     board_count = 0
     result = False
-    for k, v in board.board_state.items():
+    for k, v in session.board_state.items():
         if "-" in v:
             break
         else:
@@ -186,53 +184,53 @@ def check_winner():
     """
     Checks if there are any winners in the current board state
     """
-    if "X" in board.board_state["A1"] and \
-       "X" in board.board_state["A2"] and "X" in board.board_state["A3"]:
+    if "X" in session.board_state["A1"] and \
+       "X" in session.board_state["A2"] and "X" in session.board_state["A3"]:
         return "win"
-    elif "O" in board.board_state["A1"] and \
-         "O" in board.board_state["A2"] and "O" in board.board_state["A3"]:
+    elif "O" in session.board_state["A1"] and \
+         "O" in session.board_state["A2"] and "O" in session.board_state["A3"]:
         return "loss"
-    elif "X" in board.board_state["B1"] and \
-         "X" in board.board_state["B2"] and "X" in board.board_state["B3"]:
+    elif "X" in session.board_state["B1"] and \
+         "X" in session.board_state["B2"] and "X" in session.board_state["B3"]:
         return "win"
-    elif "O" in board.board_state["B1"] and \
-         "O" in board.board_state["B2"] and "O" in board.board_state["B3"]:
+    elif "O" in session.board_state["B1"] and \
+         "O" in session.board_state["B2"] and "O" in session.board_state["B3"]:
         return "loss"
-    elif "X" in board.board_state["C1"] and \
-         "X" in board.board_state["C2"] and "X" in board.board_state["C3"]:
+    elif "X" in session.board_state["C1"] and \
+         "X" in session.board_state["C2"] and "X" in session.board_state["C3"]:
         return "win"
-    elif "O" in board.board_state["C1"] and \
-         "O" in board.board_state["C2"] and "O" in board.board_state["C3"]:
+    elif "O" in session.board_state["C1"] and \
+         "O" in session.board_state["C2"] and "O" in session.board_state["C3"]:
         return "loss"
-    elif "X" in board.board_state["A1"] and \
-         "X" in board.board_state["B1"] and "X" in board.board_state["C1"]:
+    elif "X" in session.board_state["A1"] and \
+         "X" in session.board_state["B1"] and "X" in session.board_state["C1"]:
         return "win"
-    elif "O" in board.board_state["A1"] and \
-         "O" in board.board_state["B1"] and "O" in board.board_state["C1"]:
+    elif "O" in session.board_state["A1"] and \
+         "O" in session.board_state["B1"] and "O" in session.board_state["C1"]:
         return "loss"
-    elif "X" in board.board_state["A2"] and \
-         "X" in board.board_state["B2"] and "X" in board.board_state["C2"]:
+    elif "X" in session.board_state["A2"] and \
+         "X" in session.board_state["B2"] and "X" in session.board_state["C2"]:
         return "win"
-    elif "O" in board.board_state["A2"] and \
-         "O" in board.board_state["B2"] and "O" in board.board_state["C2"]:
+    elif "O" in session.board_state["A2"] and \
+         "O" in session.board_state["B2"] and "O" in session.board_state["C2"]:
         return "loss"
-    elif "X" in board.board_state["A3"] and \
-         "X" in board.board_state["B3"] and "X" in board.board_state["C3"]:
+    elif "X" in session.board_state["A3"] and \
+         "X" in session.board_state["B3"] and "X" in session.board_state["C3"]:
         return "win"
-    elif "O" in board.board_state["A3"] and \
-         "O" in board.board_state["B3"] and "O" in board.board_state["C3"]:
+    elif "O" in session.board_state["A3"] and \
+         "O" in session.board_state["B3"] and "O" in session.board_state["C3"]:
         return "loss"
-    elif "X" in board.board_state["A1"] and \
-         "X" in board.board_state["B2"] and "X" in board.board_state["C3"]:
+    elif "X" in session.board_state["A1"] and \
+         "X" in session.board_state["B2"] and "X" in session.board_state["C3"]:
         return "win"
-    elif "O" in board.board_state["A1"] and \
-         "O" in board.board_state["B2"] and "O" in board.board_state["C3"]:
+    elif "O" in session.board_state["A1"] and \
+         "O" in session.board_state["B2"] and "O" in session.board_state["C3"]:
         return "loss"
-    elif "X" in board.board_state["C1"] and \
-         "X" in board.board_state["B2"] and "X" in board.board_state["A3"]:
+    elif "X" in session.board_state["C1"] and \
+         "X" in session.board_state["B2"] and "X" in session.board_state["A3"]:
         return "win"
-    elif "O" in board.board_state["C1"] and \
-         "O" in board.board_state["B2"] and "O" in board.board_state["A3"]:
+    elif "O" in session.board_state["C1"] and \
+         "O" in session.board_state["B2"] and "O" in session.board_state["A3"]:
         return "loss"
 
 
@@ -244,17 +242,18 @@ def end_game(message):
 
     print(f"\nThe game ends in a {message}!")
     if message == "win":
-        board.user_score += 1
+        session.user.score += 1
     if message == "loss":
-        board.computer_score += 1
+        session.computer.score += 1
 
-    board.print_score("user")
-    board.print_score("computer")
+    session.user.print_score()
+    session.computer.print_score()
 
     play_again_input = input(
         "If you want to go for another round, please type Y: ").upper()
     if play_again_input == "Y":
         cls()
+        session.init_board()
         init_game()
 
 
@@ -263,7 +262,7 @@ def cls():
     Checks if the terminal is based on Windows or another OS.
     Then uses the right clear terminal command.
     """
-    system('cls' if name == 'nt' else 'clear')
+    system('cls' if os_name == 'nt' else 'clear')
 
 
 init_session()
