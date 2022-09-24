@@ -2,22 +2,50 @@ from random import choice
 from os import system, name
 
 
-class Player:
+class Board:
     """
     class initialises the players (user and computer).
     Also has the print_score function that prints the score.
     """
 
-    def __init__(self, name, score):
-        self.name = name
-        self.score = score
 
-    def print_score(self):
+
+    def __init__(self, user_name, user_score, computer_name, computer_score):
+        global empty_board
+        
+
+        self.user_name = user_name
+        self.user_score = user_score
+        self.computer_name = computer_name
+        self.computer_score = computer_score
+
+
+    def print_score(self, player):
         """
         prints the score to the terminal.
         <name> score is <score>
         """
-        print(f"{self.name.capitalize()} score is {self.score}\n")
+        if player == "user":
+            print(f"{self.user_name.capitalize()} score is {self.user_score}\n")
+        elif player == "computer":
+            print(f"{self.computer_name.capitalize()} score is {self.computer_score}\n")
+
+    def reset_board(self):
+        """
+        resets the playboard to empty state
+        """
+        empty_board = {
+                        "A1": "| -",
+                        "B1": "| - |",
+                        "C1": "- |",
+                        "A2": "| -",
+                        "B2": "| - |",
+                        "C2": "- |",
+                        "A3": "| -",
+                        "B3": "| - |",
+                        "C3": "- |"}
+        self.board_state = empty_board
+
 
 
 def init_session():
@@ -25,34 +53,23 @@ def init_session():
     Initialises the session and asks for the users name.
     Sets up computer and user class then  initialises the game.
     """
+
     print("Welcome to tic tac toe!\n")
     name_input = input("Please enter your name: ")
     while name_input == "":
         print("\nEmpty name input is not accepted!")
         name_input = input("Please enter your name: ")
-    global user
-    user = Player(name_input, 0)
-    global computer
-    computer = Player("Computer", 0)
+    global board
+    board = Board(name_input, 0, "computer", 0)
     init_game()
 
 
 def init_game():
     """
-    Initializes the game.
+    Initializes new game.
     """
     print("\nYou are X on the board.\n")
-    global board_state
-    board_state = {
-        "A1": "| -",
-        "B1": "| - |",
-        "C1": "- |",
-        "A2": "| -",
-        "B2": "| - |",
-        "C2": "- |",
-        "A3": "| -",
-        "B3": "| - |",
-        "C3": "- |"}
+    board.reset_board()
     draw()
     handle_round()
 
@@ -61,22 +78,22 @@ def draw():
     """
     Draws the game board
     """
-    board = ""
-    for k, v in board_state.items():
+    temp_board_string = ""
+    for k, v in board.board_state.items():
 
         if k == "A1":
             print("    A   B   C")
-            board += "1 "
-            board += f"{v} "
+            temp_board_string += "1 "
+            temp_board_string += f"{v} "
         elif k == "C1":
-            board += f"{v} \n"
-            board += "  ------------- \n2 "
+            temp_board_string += f"{v} \n"
+            temp_board_string += "  ------------- \n2 "
         elif k == "C2":
-            board += f"{v} \n"
-            board += "  ------------- \n3 "
+            temp_board_string += f"{v} \n"
+            temp_board_string += "  ------------- \n3 "
         else:
-            board += f"{v} "
-    print(board)
+            temp_board_string += f"{v} "
+    print(temp_board_string)
 
 
 # 1 round counts as when both player and computer has made 1 move.
@@ -105,12 +122,12 @@ def handle_user_round():
     """
     try:
         user_input = input("Select placement for example A1: ").upper()
-        if "X" in board_state[user_input] or "O" in board_state[user_input]:
+        if "X" in board.board_state[user_input] or "O" in board.board_state[user_input]:
             print(f"Please select a valid placement. {user_input}"
                   " is already occupied!")
             handle_user_round()
-        board_state.update(
-            {user_input: board_state[user_input].replace("-", "X")})
+        board.board_state.update(
+            {user_input: board.board_state[user_input].replace("-", "X")})
 
     except KeyError:
         if user_input == "":
@@ -128,12 +145,12 @@ def handle_computer_round():
     If it is, it will loop and select a new.
     """
     while True:
-        temp_computer_key = choice(list(board_state.keys()))
-        if "X" not in board_state[temp_computer_key] and \
-           "O" not in board_state[temp_computer_key]:
-            board_state.update({temp_computer_key:
-                                board_state[temp_computer_key]
-                                .replace("-", "O")})
+        temp_computer_key = choice(list(board.board_state.keys()))
+        if "X" not in board.board_state[temp_computer_key] and \
+           "O" not in board.board_state[temp_computer_key]:
+            board.board_state.update({temp_computer_key:
+                                      board.board_state[temp_computer_key]
+                                      .replace("-", "O")})
             break
 
 
@@ -155,7 +172,7 @@ def check_if_board_full():
     """
     board_count = 0
     result = False
-    for k, v in board_state.items():
+    for k, v in board.board_state.items():
         if "-" in v:
             break
         else:
@@ -169,53 +186,53 @@ def check_winner():
     """
     Checks if there are any winners in the current board state
     """
-    if "X" in board_state["A1"] and \
-       "X" in board_state["A2"] and "X" in board_state["A3"]:
+    if "X" in board.board_state["A1"] and \
+       "X" in board.board_state["A2"] and "X" in board.board_state["A3"]:
         return "win"
-    elif "O" in board_state["A1"] and \
-         "O" in board_state["A2"] and "O" in board_state["A3"]:
+    elif "O" in board.board_state["A1"] and \
+         "O" in board.board_state["A2"] and "O" in board.board_state["A3"]:
         return "loss"
-    elif "X" in board_state["B1"] and \
-         "X" in board_state["B2"] and "X" in board_state["B3"]:
+    elif "X" in board.board_state["B1"] and \
+         "X" in board.board_state["B2"] and "X" in board.board_state["B3"]:
         return "win"
-    elif "O" in board_state["B1"] and \
-         "O" in board_state["B2"] and "O" in board_state["B3"]:
+    elif "O" in board.board_state["B1"] and \
+         "O" in board.board_state["B2"] and "O" in board.board_state["B3"]:
         return "loss"
-    elif "X" in board_state["C1"] and \
-         "X" in board_state["C2"] and "X" in board_state["C3"]:
+    elif "X" in board.board_state["C1"] and \
+         "X" in board.board_state["C2"] and "X" in board.board_state["C3"]:
         return "win"
-    elif "O" in board_state["C1"] and \
-         "O" in board_state["C2"] and "O" in board_state["C3"]:
+    elif "O" in board.board_state["C1"] and \
+         "O" in board.board_state["C2"] and "O" in board.board_state["C3"]:
         return "loss"
-    elif "X" in board_state["A1"] and \
-         "X" in board_state["B1"] and "X" in board_state["C1"]:
+    elif "X" in board.board_state["A1"] and \
+         "X" in board.board_state["B1"] and "X" in board.board_state["C1"]:
         return "win"
-    elif "O" in board_state["A1"] and \
-         "O" in board_state["B1"] and "O" in board_state["C1"]:
+    elif "O" in board.board_state["A1"] and \
+         "O" in board.board_state["B1"] and "O" in board.board_state["C1"]:
         return "loss"
-    elif "X" in board_state["A2"] and \
-         "X" in board_state["B2"] and "X" in board_state["C2"]:
+    elif "X" in board.board_state["A2"] and \
+         "X" in board.board_state["B2"] and "X" in board.board_state["C2"]:
         return "win"
-    elif "O" in board_state["A2"] and \
-         "O" in board_state["B2"] and "O" in board_state["C2"]:
+    elif "O" in board.board_state["A2"] and \
+         "O" in board.board_state["B2"] and "O" in board.board_state["C2"]:
         return "loss"
-    elif "X" in board_state["A3"] and \
-         "X" in board_state["B3"] and "X" in board_state["C3"]:
+    elif "X" in board.board_state["A3"] and \
+         "X" in board.board_state["B3"] and "X" in board.board_state["C3"]:
         return "win"
-    elif "O" in board_state["A3"] and \
-         "O" in board_state["B3"] and "O" in board_state["C3"]:
+    elif "O" in board.board_state["A3"] and \
+         "O" in board.board_state["B3"] and "O" in board.board_state["C3"]:
         return "loss"
-    elif "X" in board_state["A1"] and \
-         "X" in board_state["B2"] and "X" in board_state["C3"]:
+    elif "X" in board.board_state["A1"] and \
+         "X" in board.board_state["B2"] and "X" in board.board_state["C3"]:
         return "win"
-    elif "O" in board_state["A1"] and \
-         "O" in board_state["B2"] and "O" in board_state["C3"]:
+    elif "O" in board.board_state["A1"] and \
+         "O" in board.board_state["B2"] and "O" in board.board_state["C3"]:
         return "loss"
-    elif "X" in board_state["C1"] and \
-         "X" in board_state["B2"] and "X" in board_state["A3"]:
+    elif "X" in board.board_state["C1"] and \
+         "X" in board.board_state["B2"] and "X" in board.board_state["A3"]:
         return "win"
-    elif "O" in board_state["C1"] and \
-         "O" in board_state["B2"] and "O" in board_state["A3"]:
+    elif "O" in board.board_state["C1"] and \
+         "O" in board.board_state["B2"] and "O" in board.board_state["A3"]:
         return "loss"
 
 
@@ -227,12 +244,12 @@ def end_game(message):
 
     print(f"\nThe game ends in a {message}!")
     if message == "win":
-        user.score += 1
+        board.user_score += 1
     if message == "loss":
-        computer.score += 1
+        board.computer_score += 1
 
-    user.print_score()
-    computer.print_score()
+    board.print_score("user")
+    board.print_score("computer")
 
     play_again_input = input(
         "If you want to go for another round, please type Y: ").upper()
