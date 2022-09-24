@@ -27,6 +27,9 @@ def init_session():
     """
     print("Welcome to tic tac toe!\n")
     name_input = input("Please enter your name: ")
+    while name_input == "":
+        print("\nEmpty name input is not accepted!")
+        name_input = input("Please enter your name: ")
     global user
     user = Player(name_input, 0)
     global computer
