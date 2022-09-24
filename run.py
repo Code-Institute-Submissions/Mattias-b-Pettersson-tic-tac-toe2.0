@@ -14,7 +14,7 @@ class Session:
 
     def init_board(self):
         """
-        reset playboard
+        initializes a new playboard
         """
         empty_board = {
                         "A1": "| -",
@@ -51,7 +51,7 @@ def init_session():
     Initialises the session and asks for the users name.
     Sets up computer and user class then  initialises the game.
     """
-
+    cls()
     print("Welcome to tic tac toe!\n")
     name_input = input("Please enter your name: ")
     while name_input == "":
