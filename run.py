@@ -118,7 +118,7 @@ def handle_user_round():
     value and checks if the selection is occupied.
     """
     try:
-        user_input = input("Select placement for example A1: ").upper()
+        user_input = input("Select placement, for example A1: ").upper()
         if "X" in session.board_state[user_input] or \
            "O" in session.board_state[user_input]:
             print(f"Please select a valid placement. {user_input}"
@@ -129,7 +129,7 @@ def handle_user_round():
 
     except KeyError:
         if user_input == "":
-            print("Please enter a placment again, you sent an empty command.")
+            print("Please enter a placement again, you sent an empty command.")
         else:
             print(
                  "Please select a valid placement. "
