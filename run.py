@@ -3,6 +3,11 @@ from os import system, name
 
 
 class Player:
+    """
+    class initialises the players (user and computer).
+    Also has the print_score function that prints the score.
+    """
+
     def __init__(self, name, score):
         self.name = name
         self.score = score
@@ -12,6 +17,10 @@ class Player:
 
 
 def init_session():
+    """
+    Initialises the session and asks for the users name.
+    Sets up computer and user class then  initialises the game.
+    """
     print("Welcome to tic tac toe!\n")
     name_input = input("Please enter your name: ")
     global user
@@ -223,8 +232,8 @@ def end_game(message):
 
 def cls():
     """
-    When calling this function it clears the terminal.
-    It also checks if the terminal is based on Windows or another OS.
+    Checks if the terminal is based on Windows or another OS.
+    Then uses the right clear terminal command.
     """
     system('cls' if name == 'nt' else 'clear')
 
