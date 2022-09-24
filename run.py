@@ -76,6 +76,8 @@ def draw():
     print(board)
 
 
+# 1 round counts as when both player and computer has made 1 move.
+# Not a whole set.
 def handle_round():
     """
     Handles each round after the player and computer selections.
@@ -104,14 +106,16 @@ def handle_user_round():
             print(f"Please select a valid placement. {user_input}"
                   " is already occupied!")
             handle_user_round()
-
         board_state.update(
             {user_input: board_state[user_input].replace("-", "X")})
 
     except KeyError:
-        print(
-            "Please select a valid placement. "
-            f"{user_input} is not a valid input!")
+        if user_input == "":
+            print("Please enter a placment again, you sent an empty command.")
+        else:
+            print(
+                 "Please select a valid placement. "
+                 f"{user_input} is not a valid input!")
         handle_user_round()
 
 
