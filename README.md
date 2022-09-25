@@ -1,4 +1,4 @@
-![Multiple screens image](assets\readme-images\multiple-screens.png)
+![Multiple screens image](assets/readme-images/multiple-screens.png)
 
 # Tic Tac Toe
 Tic Tac Toe is a Python terminal game, which runs in the Code Institute mock terminal on Heroku.
@@ -27,11 +27,11 @@ On this website, you enters your name in the beginning of the game and a playboa
 - Maintains scores.
 
 
-  ![score count image](assets\readme-images\score-count.png)
+  ![score count image](assets/readme-images/score-count.png)
 
 - Input validation and error-checking.
 
-  ![error testing image](assets\readme-images\invalid-input.png)
+  ![error testing image](assets/readme-images/invalid-input.png)
   - you cannot provide an empty input.
   - You cannot cannot place your marker outside the size of the grid.
   - You cannot place your marker on a square that is already occupied.
