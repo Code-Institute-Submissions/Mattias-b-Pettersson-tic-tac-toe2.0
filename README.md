@@ -26,7 +26,6 @@ On this website, you enter your name in the beginning of the game and a playboar
 
 - Maintains scores.
 
-
   ![score count image](assets/readme-images/score-count.png)
 
 - Input validation and error-checking.
@@ -61,7 +60,7 @@ Bugs
 
 ## Solved Bugs
 
-- When I wrote the project, I forgot that the game could be over before both players had made a placement, so as the last square was filled, the computer tried to fill a empty square but none where left. This led to an infinite loop and the game broke. i fixed this by checking if the game was over before the computer made a move, and also one after.
+- When I wrote the project, I forgot that the game could be over before both players had made a placement, so as the last square was filled, the computer tried to fill a empty square but none where left. This led to an infinite loop and the game broke. I fixed this by checking if the game was over before the computer made a move, and also one after.
 
 ## Remaining Bugs
 
@@ -86,6 +85,6 @@ Steps for deployment:
 
 - Code Institute for the deployment terminal
 - Code Institute for the deplyment steps above.
-- [Wikipedia](https://en.wikipedia.org/wiki/Tic-tac-toe) for the details of the Battleships game
+- [Wikipedia](https://en.wikipedia.org/wiki/Tic-tac-toe) for the details of the Tic Tac Toe game.
 - Poke on stack overflow for the cls function. [Link.](https://stackoverflow.com/questions/2084508/clear-terminal-in-python)
 
