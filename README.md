@@ -3,7 +3,7 @@
 # Tic Tac Toe
 Tic Tac Toe is a Python terminal game, which runs in the Code Institute mock terminal on Heroku.
 
-Users can try to beat the computer by getting three circles in a row against the computer.
+Users can try to beat the computer by getting three X in a row against the computer.
 Here is the live version of the [project](https://tic-tac-toe-matte.herokuapp.com/).
 
 # How to play
