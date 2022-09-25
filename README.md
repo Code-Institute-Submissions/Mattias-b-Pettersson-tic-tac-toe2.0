@@ -12,7 +12,7 @@ Tic Tac Toe is a paper-and-pencil game for two players who take turns marking th
 
 You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Tic-tac-toe).
 
-On this website, you enters your name in the beginning of the game and a playboard is generated. You can then choose your placement and then the computer, your oponent, makes a move. Then this is repeated til the game is over and the score is stored and displayed, then you can choose to go for another round.
+On this website, you enter your name in the beginning of the game and a playboard is generated. You can then choose your placement and then the computer, your oponent, makes a move. Then this is repeated til the game is over and the score is stored and displayed, then you can choose to go for another round.
 
 # Features
 
